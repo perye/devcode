@@ -1,4 +1,4 @@
-package com.perye.array;
+package com.perye.binarySearch;
 
 
 /**

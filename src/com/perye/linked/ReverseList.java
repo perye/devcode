@@ -9,7 +9,6 @@ package com.perye.linked;
  */
 public class ReverseList {
 
-
     public ListNode reverseList(ListNode head) {
         ListNode prev = null;
         ListNode curr = head;
@@ -20,23 +19,5 @@ public class ReverseList {
             curr = next;
         }
         return prev;
-    }
-
-    public static class ListNode {
-
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
     }
 }

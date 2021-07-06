@@ -53,4 +53,55 @@ public class LongestPalindrome {
         return s.substring(begin, begin + maxLen);
     }
 
+
+
+    /**
+     * 最长回文子串
+     * 回文串问题的究极答案：Manacher 算法
+     * Manacher算法 是「回文串」问题的最优解
+     * 时间复杂度：只对字符串进行了一次扫描。复杂度为 O(n)
+     * 空间复杂度：O(1)
+     * @param s 字符串 s
+     * @return s 中最长的回文子串
+     */
+    public String longestPalindrome2(String s) {
+        if (s.length() == 1) {
+            return s;
+        }
+        char[] chars = new char[s.length() * 2 + 1];
+        for (int i = 0, idx = 0; i < chars.length; i++) {
+            chars[i] = (i & 1) == 0 ? '#' : s.charAt(idx++);
+        }
+        int n = chars.length;
+        int[] pArr = new int[n];
+        int c = -1, r = -1, pos = -1;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            pArr[i] = i < r ? Math.min(pArr[c * 2 - i], r - i) : 1;
+            while (i + pArr[i] < n && i - pArr[i] > -1) {
+                if (chars[i + pArr[i]] == chars[i - pArr[i]]) {
+                    pArr[i]++;
+                } else {
+                    break;
+                }
+            }
+            if (i + pArr[i] > r) {
+                r = i + pArr[i];
+                c = i;
+            }
+            if (pArr[i] > max) {
+                max = pArr[i];
+                pos = i;
+            }
+        }
+        int offset = pArr[pos];
+        StringBuilder sb = new StringBuilder();
+        for (int i = pos - offset + 1; i <= pos + offset - 1; i++) {
+            if (chars[i] != '#') {
+                sb.append(chars[i]);
+            }
+        }
+        return sb.toString();
+    }
+
 }

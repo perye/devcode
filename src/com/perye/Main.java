@@ -1,18 +1,41 @@
 package com.perye;
 
 
+import com.perye.tree.TreeNode;
+import com.perye.unionFind.UnionFind;
+
 import java.util.*;
-import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.IntConsumer;
+import java.util.regex.Pattern;
 
 /**
  * @author honggd
  */
 public class Main {
 
-    class ListNode {
+    static class Node {
+        public int val;
+        public List<Node> neighbors;
+
+        public Node() {
+            val = 0;
+            neighbors = new ArrayList<Node>();
+        }
+
+        public Node(int _val) {
+            val = _val;
+            neighbors = new ArrayList<Node>();
+        }
+
+        public Node(int _val, ArrayList<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+
+    static class ListNode {
 
         int val;
         ListNode next;
@@ -31,7 +54,7 @@ public class Main {
 
     }
 
-    class TreeNode {
+    static class TreeNode {
 
         int val;
         TreeNode left;
@@ -52,53 +75,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-//        System.out.println(maximumElementAfterDecrementingAndRearranging(new int[]{2, 2, 1, 2, 1}));
-//        System.out.println(maximumElementAfterDecrementingAndRearranging(new int[]{100, 1, 1000}));
-//        System.out.println(maximumElementAfterDecrementingAndRearranging(new int[]{1, 2, 3, 4, 5}));
-//        System.out.println(MinMoves.minMoves(new int[]{1, 2, 3}));
-//        System.out.println(replaceDigits("a1c1e1"));
-//        System.out.println(getMinDistance(new int[]{5, 3, 6}, 5, 2));
-//        System.out.println(splitString("050043"));
-//        System.out.println(ExcelSheetColumnTitle.convertToTitle(1));
-//        System.out.println(ExcelSheetColumnTitle.convertToTitle(28));
-//        System.out.println("5555".substring(3));
-//        System.out.println(containsNearbyDuplicate(new int[]{1, 2, 3, 1}, 3));
-//        System.out.println(wordPattern("abba","dog cat cat dog"));
-//        System.out.println(hammingDistance(3, 1));
-//        System.out.println(dominantIndex(new int[]{1}));
-    }
+        Solution solution = new Solution();
+        System.out.println(solution.maxPoints(new int[][]{{0, 3, 0, 4, 2}, {5, 4, 2, 4, 1}, {5, 0, 0, 5, 1}, {2, 0, 1, 0, 3}}));
+//
 
-    public class Status {
-        public int lSum, rSum, mSum, iSum;
-
-        public Status(int lSum, int rSum, int mSum, int iSum) {
-            this.lSum = lSum;
-            this.rSum = rSum;
-            this.mSum = mSum;
-            this.iSum = iSum;
-        }
-    }
-
-    public int maxSubArray(int[] nums) {
-        return getInfo(nums, 0, nums.length - 1).mSum;
-    }
-
-    public Status getInfo(int[] a, int l, int r) {
-        if (l == r) {
-            return new Status(a[l], a[l], a[l], a[l]);
-        }
-        int m = (l + r) >> 1;
-        Status lSub = getInfo(a, l, m);
-        Status rSub = getInfo(a, m + 1, r);
-        return pushUp(lSub, rSub);
-    }
-
-    public Status pushUp(Status l, Status r) {
-        int iSum = l.iSum + r.iSum;
-        int lSum = Math.max(l.lSum, l.iSum + r.lSum);
-        int rSum = Math.max(r.rSum, r.iSum + l.rSum);
-        int mSum = Math.max(Math.max(l.mSum, r.mSum), l.rSum + r.lSum);
-        return new Status(lSum, rSum, mSum, iSum);
     }
 
 

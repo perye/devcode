@@ -1,65 +1,70 @@
 package com.perye.unionFind;
 
+/**
+ * 基于路径压缩的按秩合并优化的「并查集」
+ */
 public class UnionFind {
+
+    int[] root;
+
+    /**
+     * rank 数组来记录每个顶点的高度，也就是每个顶点的「秩」
+     */
+    int[] rank;
 
     /**
      * 连通分量个数
      */
-    private int count;
+    int count;
+
+    public UnionFind(int size) {
+        root = new int[size];
+        rank = new int[size];
+        count = size;
+        for (int i = 0; i < size; i++) {
+            root[i] = i;
+            // 一开始每个顶点的初始「秩」为1，因为它们只有自己本身的一个顶点。
+            rank[i] = 1;
+        }
+    }
 
     /**
-     * 存储一棵树
+     * 查找顶点 x 的根结点
      */
-    private final int[] parent;
-
-    /**
-     * 记录树的“重量”
-     */
-    private final int[] size;
-
-    public UnionFind(int n) {
-        this.count = n;
-        parent = new int[n];
-        size = new int[n];
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
-    }
-
-    public void union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if (rootP == rootQ) {
-            return;
-        }
-        // 小树接到大树下面，较平衡
-        if (size[rootP] > size[rootQ]) {
-            parent[rootQ] = rootP;
-            size[rootP] += size[rootQ];
-        } else {
-            parent[rootP] = rootQ;
-            size[rootQ] += size[rootP];
-        }
-        count--;
-    }
-
-    public boolean connected(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        return rootP == rootQ;
-    }
-
     public int find(int x) {
-        while (parent[x] != x) {
-            // 进行路径压缩
-            parent[x] = parent[parent[x]];
-            x = parent[x];
+        if (x == root[x]) {
+            return x;
         }
-        return x;
+        return root[x] = find(root[x]);
     }
 
-    public int count() {
+    /**
+     * 连接两个顶点 x 和 y 。将它们的根结点变成相同的，即代表它们来自于同一个根节点
+     */
+    public void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX != rootY) {
+            if (rank[rootX] > rank[rootY]) {
+                root[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                root[rootX] = rootY;
+            } else {
+                root[rootY] = rootX;
+                rank[rootX] += 1;
+            }
+            count--;
+        }
+    }
+
+    public int getCount() {
         return count;
+    }
+
+    /**
+     * 检查两个顶点 x 和 y 的「连通性」。
+     */
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
     }
 }

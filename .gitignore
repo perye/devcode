@@ -26,3 +26,4 @@
 /nbdist/
 /.nb-gradle/
 src/main/resources/rebel.xml
+src/com/perye/temp/

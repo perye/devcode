@@ -7,47 +7,48 @@ import java.util.*;
  */
 public class Solution {
 
-    public long maxPoints(int[][] points) {
-        int m = points.length;
-        int n = points[0].length;
-        int[][] dp = new int[m][n];
-        int[][] leftToRight = new int[m][n];
-        int[][] rightToLeft = new int[m][n];
-        for (int i = 0; i < m; i++) {
-            int curMax = Integer.MIN_VALUE;
-            for (int j = 0; j < n; j++) {
-                if (i == 0) {
-                    // 初始化第一行的分数
-                    dp[i][j] = points[i][j];
-                } else {
-                    // 获取上一行的数据
-                    int maxLeftIdx = leftToRight[i - 1][j];
-                    int maxRightIdx = rightToLeft[i - 1][j];
-                    dp[i][j] = Math.max(dp[i - 1][maxLeftIdx] - Math.abs(maxLeftIdx - j), dp[i - 1][maxRightIdx] - Math.abs(maxRightIdx - j)) + points[i][j];
-                }
-                // 当前坐标的左右最大值
-                if (dp[i][j] >= curMax) {
-                    leftToRight[i][j] = j;
-                    curMax = dp[i][j];
-                } else {
-                    leftToRight[i][j] = leftToRight[i][j - 1];
-                }
-            }
-            curMax = Integer.MIN_VALUE;
-            for (int j = n - 1; j >= 0; j--) {
-                if (dp[i][j] >= curMax) {
-                    rightToLeft[i][j] = j;
-                    curMax = dp[i][j];
-                } else {
-                    rightToLeft[i][j] = rightToLeft[i][j + 1];
-                }
+    public int minSubArrayLen(int target, int[] nums) {
+        int ans = Integer.MAX_VALUE;
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        while (right < nums.length) {
+            int c = nums[right];
+            right++;
+            // 更新窗口
+            sum += c;
+            // 判断是否需要收缩窗口
+            while (sum >= target) {
+                ans = Math.min(ans, right - left);
+                int d = nums[left];
+                left++;
+                // 更新窗口
+                sum -= d;
             }
         }
-        int ans = Integer.MIN_VALUE;
-        for (int j = 0; j < n; j++) {
-            ans = Math.max(ans, dp[m - 1][j]);
-        }
+        return ans == Integer.MAX_VALUE ? 0 : ans;
+    }
+
+
+
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Deque<Integer> path = new ArrayDeque<>();
+        dfs(graph, 0, path, ans);
         return ans;
     }
+
+    private void dfs(int[][] graph, int begin, Deque<Integer> path, List<List<Integer>> ans) {
+        if (begin == graph.length - 1) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < graph[begin].length; i++) {
+            path.addLast(begin);
+            dfs(graph, graph[begin][i], path, ans);
+            path.removeLast();
+        }
+    }
+
 
 }

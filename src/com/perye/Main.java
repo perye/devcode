@@ -1,6 +1,7 @@
 package com.perye;
 
 
+import com.perye.moban.IntegerKM;
 import com.perye.tree.TreeNode;
 import com.perye.unionFind.UnionFind;
 
@@ -76,9 +77,54 @@ public class Main {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.maxPoints(new int[][]{{0, 3, 0, 4, 2}, {5, 4, 2, 4, 1}, {5, 0, 0, 5, 1}, {2, 0, 1, 0, 3}}));
-//
+//        System.out.println(letterCombinations("23"));
+        //
 
+    }
+
+
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        backtrack(0, 2 * n, 0, n, "", ans);
+        return ans;
+    }
+
+    private void backtrack(int begin, int n, int score, int max, String path, List<String> ans) {
+        if (begin == n) {
+            if (score == 0) {
+                ans.add(path);
+            }
+        } else {
+            if (score + 1 <= max) {
+                backtrack(begin + 1, n, score + 1, max, path + "(", ans);
+            }
+            if (score - 1 >= 0) {
+                backtrack(begin + 1, n, score - 1, max, path + ")", ans);
+            }
+        }
+    }
+
+    int ans = -1;
+
+    public int findSecondMinimumValue(TreeNode root) {
+        dfs(root, root.val);
+        return ans;
+    }
+
+    private void dfs(TreeNode root, int val) {
+        if (root == null) {
+            return;
+        }
+        if (root.val != val) {
+            if (ans == -1) {
+                ans = root.val;
+            } else {
+                ans = Math.min(ans, root.val);
+            }
+            return;
+        }
+        dfs(root.left, val);
+        dfs(root.right, val);
     }
 
 

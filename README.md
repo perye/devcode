@@ -1,6 +1,6 @@
-# leetcode
+# code
 
-个人leetcode刷题笔记
+个人code笔记
 
 ## 位运算
 ```

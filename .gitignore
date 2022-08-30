@@ -26,4 +26,6 @@
 /nbdist/
 /.nb-gradle/
 src/main/resources/rebel.xml
-src/com/perye/temp/
+
+/leetcode/
+/src/com/perye/debug/

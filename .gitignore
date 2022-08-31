@@ -27,5 +27,7 @@
 /.nb-gradle/
 src/main/resources/rebel.xml
 
-/leetcode/
-/src/com/perye/debug/
+# leetcode plugin file
+/leetcode/editor/
+# leetcode plugin debug
+/leetcode/src/com/perye/debug/

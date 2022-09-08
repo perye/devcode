@@ -39,13 +39,13 @@ public class TestTimerMgr2 {
      */
     public static void initTask() {
         if (testTask2 == null) {
-            testTask2 = new TestTask2(3, 7, TimeUnit.SECONDS);
-            timerExecutorService.scheduleWithFixedDelay(testTask2, testTask2.getInitialDelay(), testTask2.getDelay(), testTask2.getUnit());
+            testTask2 = new TestTask2();
+            timerExecutorService.scheduleWithFixedDelay(testTask2, 3, 7, TimeUnit.SECONDS);
         }
 
         if (testTask4 == null) {
-            testTask4 = new TestTask4(5, 5, TimeUnit.SECONDS);
-            timerExecutorService.scheduleWithFixedDelay(testTask4, testTask4.getInitialDelay(), testTask4.getDelay(), testTask4.getUnit());
+            testTask4 = new TestTask4();
+            timerExecutorService.scheduleWithFixedDelay(testTask4, 5, 5, TimeUnit.SECONDS);
         }
     }
 
@@ -64,8 +64,7 @@ public class TestTimerMgr2 {
      */
     public static void cancelTask(GeneralTask task) {
         if (task != null) {
-            log.info("停止任务: {}", task.getTaskName());
-            task.cancel(false);
+            task.cancelTask(false);
         }
     }
 

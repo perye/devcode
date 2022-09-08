@@ -3,7 +3,7 @@ package com.perye.executor.test.task;
 import com.perye.executor.GeneralTask;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 定时任务4
@@ -11,14 +11,21 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class TestTask4 extends GeneralTask {
 
-    public TestTask4(long initialDelay, long delay, TimeUnit unit) {
-        super(initialDelay, delay, unit);
+    public TestTask4() {
+
     }
+
+    /**
+     * 计数
+     */
+    private static AtomicInteger cnt = new AtomicInteger(0);
 
     @Override
     public void doRun() {
-        log.info("-------------------------------执行定时任务4-------------------------------");
-        log.info("do something");
-        log.info("-------------------------------执行定时任务4-------------------------------");
+        cnt.getAndIncrement();
+        log.info("定时任务4执行次数: {}", cnt.get());
+        if (cnt.get() == 2) {
+            this.cancelTask(false);
+        }
     }
 }

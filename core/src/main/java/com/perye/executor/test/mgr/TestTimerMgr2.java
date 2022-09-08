@@ -39,7 +39,7 @@ public class TestTimerMgr2 {
      */
     public static void initTask() {
         if (testTask2 == null) {
-            testTask2 = new TestTask2(10, 10, TimeUnit.SECONDS);
+            testTask2 = new TestTask2(3, 7, TimeUnit.SECONDS);
             timerExecutorService.scheduleWithFixedDelay(testTask2, testTask2.getInitialDelay(), testTask2.getDelay(), testTask2.getUnit());
         }
 

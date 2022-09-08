@@ -7,10 +7,19 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public abstract class GeneralTask extends CancellableTask {
 
+    /**
+     * 延迟第一次执行的时间
+     */
     private long initialDelay;
 
+    /**
+     * 从一个执行的终止到下一个执行的开始之间的延迟
+     */
     private long delay;
 
+    /**
+     * initialDelay和delay参数的时间单位
+     */
     private TimeUnit unit;
 
     public GeneralTask() {
@@ -40,15 +49,6 @@ public abstract class GeneralTask extends CancellableTask {
      * 执行
      */
     public abstract void doRun();
-
-    /**
-     * 取消定时任务
-     */
-    @Override
-    public boolean cancel(boolean mayInterruptIfRunning) {
-        return super.cancel(mayInterruptIfRunning);
-    }
-
 
     /**
      * 获取定时任务名称

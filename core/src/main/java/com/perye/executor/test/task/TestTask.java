@@ -1,10 +1,13 @@
-package com.perye.test;
+package com.perye.executor.test.task;
 
 import com.perye.executor.GeneralTask;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 定时任务1
+ */
 @Slf4j
 public class TestTask extends GeneralTask {
 
@@ -14,7 +17,8 @@ public class TestTask extends GeneralTask {
 
     @Override
     public void doRun() {
-        // do something
-        log.info("test task haha");
+        log.info("-------------------------------执行定时任务1-------------------------------");
+        log.info("do something");
+        log.info("-------------------------------执行定时任务1-------------------------------");
     }
 }

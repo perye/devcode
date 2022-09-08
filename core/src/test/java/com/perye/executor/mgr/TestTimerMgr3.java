@@ -1,10 +1,8 @@
-package com.perye.executor.test.mgr;
+package com.perye.executor.mgr;
 
 import com.perye.executor.ExecutorHelper;
 import com.perye.executor.GeneralTask;
-import com.perye.executor.test.task.TestTask2;
-import com.perye.executor.test.task.TestTask4;
-import com.perye.executor.test.task.TestTask5;
+import com.perye.executor.task.TestTask5;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ScheduledExecutorService;
@@ -39,8 +37,8 @@ public class TestTimerMgr3 {
      */
     public static void initTask() {
         if (testTask5 == null) {
-            testTask5 = new TestTask5(0, 5, TimeUnit.SECONDS);
-            timerExecutorService.scheduleWithFixedDelay(testTask5, testTask5.getInitialDelay(), testTask5.getDelay(), testTask5.getUnit());
+            testTask5 = new TestTask5();
+            timerExecutorService.scheduleWithFixedDelay(testTask5, 0, 5, TimeUnit.SECONDS);
         }
     }
 
@@ -58,8 +56,7 @@ public class TestTimerMgr3 {
      */
     public static void cancelTask(GeneralTask task) {
         if (task != null) {
-            log.info("停止任务: {}", task.getTaskName());
-            task.cancel(false);
+            task.cancelTask(false);
         }
     }
 

@@ -30,4 +30,4 @@ src/main/resources/rebel.xml
 # leetcode plugin file
 /leetcode/editor/
 # leetcode plugin debug
-/leetcode/src/com/perye/debug/
+/leetcode/src/main/java/com/perye/debug

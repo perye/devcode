@@ -1,8 +1,8 @@
-package com.perye.executor.test;
+package com.perye.executor;
 
-import com.perye.executor.test.mgr.TestTimerMgr;
-import com.perye.executor.test.mgr.TestTimerMgr2;
-import com.perye.executor.test.mgr.TestTimerMgr3;
+import com.perye.executor.mgr.TestTimerMgr;
+import com.perye.executor.mgr.TestTimerMgr2;
+import com.perye.executor.mgr.TestTimerMgr3;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

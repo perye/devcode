@@ -2,34 +2,11 @@ package com.perye.executor;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
-
 @Slf4j
 public abstract class GeneralTask extends CancellableTask {
 
-    /**
-     * 延迟第一次执行的时间
-     */
-    private long initialDelay;
-
-    /**
-     * 从一个执行的终止到下一个执行的开始之间的延迟
-     */
-    private long delay;
-
-    /**
-     * initialDelay和delay参数的时间单位
-     */
-    private TimeUnit unit;
-
     public GeneralTask() {
 
-    }
-
-    public GeneralTask(long initialDelay, long delay, TimeUnit unit) {
-        this.initialDelay = initialDelay;
-        this.delay = delay;
-        this.unit = unit;
     }
 
     @Override
@@ -57,15 +34,27 @@ public abstract class GeneralTask extends CancellableTask {
         return this.getClass().getName();
     }
 
-    public long getInitialDelay() {
-        return initialDelay;
+    /**
+     * 取消任务
+     */
+    public void cancelTask(boolean mayInterruptIfRunning) {
+        if (!isDone() && !isCancelled()) {
+            log.info("停止任务: {}", this.getTaskName());
+            this.cancel(mayInterruptIfRunning);
+        }
     }
 
-    public long getDelay() {
-        return delay;
+    /**
+     * 任务是否完成
+     */
+    public boolean isDone(){
+        return this.scheduledFuture != null && this.scheduledFuture.isDone();
     }
 
-    public TimeUnit getUnit() {
-        return unit;
+    /**
+     * 任务是否取消
+     */
+    public boolean isCancelled(){
+        return this.scheduledFuture != null && this.scheduledFuture.isCancelled();
     }
 }

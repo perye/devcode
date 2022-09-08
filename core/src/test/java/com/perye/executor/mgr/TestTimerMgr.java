@@ -1,25 +1,25 @@
-package com.perye.executor.test.mgr;
+package com.perye.executor.mgr;
 
 import com.perye.executor.ExecutorHelper;
 import com.perye.executor.GeneralTask;
-import com.perye.executor.test.task.TestTask2;
-import com.perye.executor.test.task.TestTask4;
+import com.perye.executor.task.TestTask;
+import com.perye.executor.task.TestTask3;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 定时器管理2
+ * 定时器管理1
  */
 @Slf4j
-public class TestTimerMgr2 {
+public class TestTimerMgr {
 
     private static ScheduledExecutorService timerExecutorService;
 
     // --------------------------------------------------定时器列表--------------------------------------------------
-    private static TestTask2 testTask2 = null;
-    private static TestTask4 testTask4 = null;
+    private static TestTask testTask = null;
+    private static TestTask3 testTask3 = null;
     // --------------------------------------------------定时器列表--------------------------------------------------
 
     /**
@@ -29,7 +29,7 @@ public class TestTimerMgr2 {
         // 初始化定时器线程池
         int corePoolSize = Runtime.getRuntime().availableProcessors() * 2;
         corePoolSize = Math.min(8, Math.max(4, corePoolSize));
-        timerExecutorService = ExecutorHelper.createScheduledThreadPoolExecutor(corePoolSize, "TestTimerMgr2");
+        timerExecutorService = ExecutorHelper.createScheduledThreadPoolExecutor(corePoolSize, "TestTimerMgr");
         // 加载任务
         initTask();
     }
@@ -38,14 +38,13 @@ public class TestTimerMgr2 {
      * 初始化加载定时器
      */
     public static void initTask() {
-        if (testTask2 == null) {
-            testTask2 = new TestTask2(3, 7, TimeUnit.SECONDS);
-            timerExecutorService.scheduleWithFixedDelay(testTask2, testTask2.getInitialDelay(), testTask2.getDelay(), testTask2.getUnit());
+        if (testTask == null) {
+            testTask = new TestTask();
+            timerExecutorService.scheduleWithFixedDelay(testTask, 0, 3, TimeUnit.SECONDS);
         }
-
-        if (testTask4 == null) {
-            testTask4 = new TestTask4(5, 5, TimeUnit.SECONDS);
-            timerExecutorService.scheduleWithFixedDelay(testTask4, testTask4.getInitialDelay(), testTask4.getDelay(), testTask4.getUnit());
+        if (testTask3 == null) {
+            testTask3 = new TestTask3();
+            timerExecutorService.schedule(testTask3, 5, TimeUnit.SECONDS);
         }
     }
 
@@ -54,8 +53,8 @@ public class TestTimerMgr2 {
      * 停止任务
      */
     public static void stop() {
-        cancelTask(testTask2);
-        cancelTask(testTask4);
+        cancelTask(testTask);
+        cancelTask(testTask3);
     }
 
 
@@ -64,8 +63,7 @@ public class TestTimerMgr2 {
      */
     public static void cancelTask(GeneralTask task) {
         if (task != null) {
-            log.info("停止任务: {}", task.getTaskName());
-            task.cancel(false);
+            task.cancelTask(false);
         }
     }
 

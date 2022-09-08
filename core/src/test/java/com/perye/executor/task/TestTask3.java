@@ -1,4 +1,4 @@
-package com.perye.executor.test.task;
+package com.perye.executor.task;
 
 import com.perye.executor.GeneralTask;
 import lombok.extern.slf4j.Slf4j;
@@ -6,14 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 定时任务1
+ * 定时任务3
  */
 @Slf4j
-public class TestTask extends GeneralTask {
-
-    public TestTask() {
-
-    }
+public class TestTask3 extends GeneralTask {
 
     /**
      * 计数
@@ -23,9 +19,6 @@ public class TestTask extends GeneralTask {
     @Override
     public void doRun() {
         cnt.getAndIncrement();
-        log.info("定时任务1执行次数: {}", cnt.get());
-        if (cnt.get() == 4) {
-            throw new RuntimeException("task exception");
-        }
+        log.info("定时任务3执行次数: {}", cnt.get());
     }
 }

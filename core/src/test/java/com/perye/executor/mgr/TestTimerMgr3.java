@@ -1,8 +1,8 @@
-package com.perye.executor.test.mgr;
+package com.perye.executor.mgr;
 
 import com.perye.executor.ExecutorHelper;
 import com.perye.executor.GeneralTask;
-import com.perye.executor.test.task.TestTask5;
+import com.perye.executor.task.TestTask5;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ScheduledExecutorService;

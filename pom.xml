@@ -12,6 +12,7 @@
         <module>demo</module>
         <module>core</module>
         <module>leetcode</module>
+        <module>design-patterns</module>
     </modules>
 
     <properties>
